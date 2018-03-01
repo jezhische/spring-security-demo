@@ -6,7 +6,7 @@
     <Properties>
         <!--skipJansi у меня не работает для 2.10.0, а для более низких версий подключен по умолчанию:-->
         <Property name="log4j.skipJansi">false</Property>
-        <Property name="log_path">src/main/java/com/jezh/springdemo/logs</Property>
+        <Property name="log_path">src/main/java/com/jezh/springsecurity/log</Property>
     </Properties>
     <Filters>
 <!--  Здесь могут быть фильтры, относящиеся к уровню конфигурации, до того, сообщение попало в LogConfig -->
@@ -24,12 +24,12 @@
         соответствующий файл (который может тут же и создаваться по условию OnStartupTriggeringPolicy minSize="1")
         только при следующем запуске приложения (т.е. происходит flush, опорожнение буфера)-->
         <RollingFile name="BarRollingFile" fileName="${log_path}/logBar.log"
-                     filePattern="${log_path}/logBarLog/logBar_$${date:yyyy-MM-dd}/%d{HH}/logBar-%d{yyyy-MM-dd_HH-mm}-%i.log">
+                     filePattern="${log_path}/logBarLog/logBar_$${date:yyyy-MM-dd}/logBar-%d{yyyy-MM-dd_HH}-%i.log">
 <!--выражение ${date:yyyy-MM-dd} является lookup, который "inserts external values into the log4j2 configuration"
 (в данном случае - current date), а предшествующий $ - это "escape character, to insert the lookup expression
 into the filePattern attribute"-->
             <!--еще пример lookup - заголовок будет выведен перед первой записью логгера (только в файле)-->
-            <PatternLayout header="${java:version} - ${java:os}\n">
+            <PatternLayout header="%d ${java:version} - ${java:os}\n">
                 <Pattern>%d [%t] %-5level %logger: %msg%n%throwable</Pattern>
             </PatternLayout>
 <!--маркер-фильтры нуждаются в добавлении маркеров к сообщениям, отсылаемым логгерами, в джава-коде - см. Bar.java и MyApp.java-->
