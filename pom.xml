@@ -231,7 +231,7 @@
                 <version>${tomcat7.maven.plugin.version}</version>
                 <configuration>
                     <port>8086</port>
-                    <path>/ssd</path>
+                    <path>/ssd1</path>
                 </configuration>
             </plugin>
         </plugins>
