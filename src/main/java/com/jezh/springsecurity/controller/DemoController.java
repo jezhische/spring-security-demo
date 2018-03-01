@@ -6,12 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DemoController {
 
-//    @GetMapping("/")
-//    public String index() {
-//        return "index";
-//    }
+    @GetMapping("")
+    public String home() {
+        return "home";
+    }
 
-        @GetMapping("/test1")
+    @GetMapping("_404")
+    public String _404() {
+        return "_404";
+    }
+
+        @GetMapping("test1")
     public String test1() {
         return "test1";
     }

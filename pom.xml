@@ -24,9 +24,13 @@
         <!--<javax.validation.version>2.0.0.Final</javax.validation.version>-->
         <hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
         <!--<commons-logging.version>1.2</commons-logging.version>-->
-
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
+
         <spring.version>4.3.9.RELEASE</spring.version>
+        <!--see maven central repo to find out the compatible version of the springframework and springsecurity.
+        E.g.: spring.version 4.3.9.RELEASE and springsecurity.version 4.2.3.RELEASE
+        or spring.version 5.0.4.RELEASE and springsecurity.version 5.0.3.RELEASE-->
+        <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
 
         <junit.version>4.12</junit.version>
 
@@ -59,12 +63,12 @@
         </dependency>
         <!--___________________________________________________________ javax servlet, JSP, JSTL-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+            <!--<version>${javax.servlet-api.version}</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
         <!--вроде можно отключить...-->
         <!--<dependency>-->
             <!--<groupId>javax.servlet.jsp</groupId>-->
@@ -76,13 +80,13 @@
             <artifactId>jstl</artifactId>
             <version>${javax.servlet.jstl.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>javax</groupId>-->
-            <!--<artifactId>javaee-web-api</artifactId>-->
-            <!--&lt;!&ndash;todo: если нет следующей строчки, будет ошибка запуска Tomcat: "...A child container failed during start"&ndash;&gt;-->
-            <!--<scope>provided</scope>-->
-            <!--<version>${javax.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <!--todo: если нет следующей строчки, будет ошибка запуска Tomcat: "...A child container failed during start"-->
+            <scope>provided</scope>
+            <version>${javax.version}</version>
+        </dependency>
         <!--___________________________________________________________ hibernate, jdbc-connector, test db, data-source-->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
