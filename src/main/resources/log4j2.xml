@@ -24,7 +24,7 @@
         соответствующий файл (который может тут же и создаваться по условию OnStartupTriggeringPolicy minSize="1")
         только при следующем запуске приложения (т.е. происходит flush, опорожнение буфера)-->
         <RollingFile name="BarRollingFile" fileName="${log_path}/logBar.log"
-                     filePattern="${log_path}/logBarLog/logBar_$${date:yyyy-MM-dd}/logBar-%d{yyyy-MM-dd_HH}-%i.log">
+                     filePattern="${log_path}/logBarLog/logBar_$${date:yyyy-MM-dd}/%d{HH}/logBar-%d{yyyy-MM-dd_HH}-%i.log">
 <!--выражение ${date:yyyy-MM-dd} является lookup, который "inserts external values into the log4j2 configuration"
 (в данном случае - current date), а предшествующий $ - это "escape character, to insert the lookup expression
 into the filePattern attribute"-->
@@ -44,13 +44,14 @@ into the filePattern attribute"-->
 
             <Policies>
                 <OnStartupTriggeringPolicy minSize="1"/>
+                <!--интервал 1 файл/единицу времени - в час, т.к. название файла заканчивается на {...HH} -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="1 KB"/>
+                <SizeBasedTriggeringPolicy size="2 KB"/>
             </Policies>
-            <!--Не более 60 файлов С ОДИНАКОВЫМ ИМЕНЕМ (с разными индексами i) будет в каждой подпапке с именем %d{HH},
+            <!--Не более 60 файлов С ОДИНАКОВЫМ ИМЕНЕМ (с разными индексами i) будет в каждой подпапке с именем logBar_$${date:yyyy-MM-dd},
             если больше, то новый будет записываться с индексом 60, 60-й переписываться с индексом 59 и т.д.,
             а 1-ый уничтожаться - файлы дописываются в конец (в отличие от того, что написано в доках), и работают
-            как стек, FIFO. В общем, будет получаться не более 60 файлов в минуту, и при этом i = {1; 60}-->
+            как стек, FIFO. В общем, будет получаться не более 60 файлов в час, и при этом i = {1; 60}-->
             <DefaultRolloverStrategy max="60" />
         </RollingFile>
 <!--  .............................................................................................................. -->

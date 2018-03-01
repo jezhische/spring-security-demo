@@ -1,9 +1,8 @@
-package com.jezh.springsecurity.config;
+package com.jezh.springsecurity.config.appConfig;
 
-import org.springframework.stereotype.Component;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-//@Component
 public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -15,6 +14,7 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
         return new Class[]{DemoAppConfig.class};
     }
 
+    @NotNull
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};

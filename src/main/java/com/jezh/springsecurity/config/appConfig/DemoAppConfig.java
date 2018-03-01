@@ -1,11 +1,13 @@
-package com.jezh.springsecurity.config;
+package com.jezh.springsecurity.config.appConfig;
 
 import com.jezh.springsecurity.util.TerminalViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import com.jezh.springsecurity.util.ChainableUrlBasedViewResolver;
@@ -15,7 +17,9 @@ import javax.servlet.ServletContext;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.jezh.springsecurity")
-public class DemoAppConfig {
+// https://dzone.com/articles/spring-mvc-and-java-based-configuration-1: пробуем WebMvcConfigurer: "Defines callback
+// methods to customize the Java-based configuration for Spring MVC enabled via @EnableWebMvc".
+public class DemoAppConfig implements WebMvcConfigurer {
 
 //    http://www.baeldung.com/spring-mvc-view-resolver-tutorial
 // "We can simply chain view resolvers by adding more than one resolver to the configuration... we’ll need to define
@@ -48,4 +52,9 @@ public class DemoAppConfig {
     // https://www.concretepage.com/spring/spring-mvc/spring-mvc-resourcebundleviewresolver-example-with-java-config
     // http://www.baeldung.com/spring-mvc-view-resolver-tutorial
 
+//    default method from WebMvcConfigurer:
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 }

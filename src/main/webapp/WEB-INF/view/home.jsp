@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>springsecurity-demo-home</title>
+    <%--To NOT IGNORE ${} tag (https://dzone.com/articles/spring-mvc-and-java-based-configuration-1)--%>
+    <%@ page isELIgnored="false" %>
 </head>
 <body>
 <h2>SpringSecurity-demo home</h2>
