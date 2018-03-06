@@ -53,8 +53,8 @@ public class DemoAppConfig implements WebMvcConfigurer {
     // http://www.baeldung.com/spring-mvc-view-resolver-tutorial
 
 //    default method from WebMvcConfigurer:
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
+//    @Override
+//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//        configurer.enable();
+//    }
 }

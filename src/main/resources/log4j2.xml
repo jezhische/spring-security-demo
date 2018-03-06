@@ -2,7 +2,7 @@
 
 
 <!--status="debug" выводит внутренние (при работе log4j) логи в консоль ВНЕ ЗАВИСИМОСТИ от root level-->
-<Configuration status="debug" name="MyLogConfig">
+<Configuration status="error" name="MyLogConfig">
     <Properties>
         <!--skipJansi у меня не работает для 2.10.0, а для более низких версий подключен по умолчанию:-->
         <Property name="log4j.skipJansi">false</Property>
