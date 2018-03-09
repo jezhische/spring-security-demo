@@ -72,7 +72,7 @@ into the filePattern attribute"-->
             <!--&lt;!&ndash;NB: запись типа <Logger.../> не работает, нужно <Logger...></Logger>&ndash;&gt;-->
         <!--</Logger>-->
 
-        <Root level="error">
+        <Root level="warn">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

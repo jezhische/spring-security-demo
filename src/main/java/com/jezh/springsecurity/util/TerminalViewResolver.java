@@ -21,6 +21,7 @@ public class TerminalViewResolver extends InternalResourceViewResolver {
 // в виде "message /ssd/greet/WEB-INF/view/_404.jsp"
         if (stream == null)
             return super.buildView("_404");
+//            return super.buildView("redirect:/static/_404.html");
         return super.buildView(viewName);
     }
 }
