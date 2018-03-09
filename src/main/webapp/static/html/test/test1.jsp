@@ -3,14 +3,11 @@
 <head>
     <link rel="stylesheet" type="text/css" href="static/bootstrap3.3.7/css/bootstrap.min.css"/>
     <meta charset="UTF-8">
-    <title>404</title>
+    <title>Title</title>
 </head>
 <body>
 <div class="container-fluid">
-    <h2>Not found (from _404.html)</h2>
-    <p style="color: red"><i>Controller method is present, but resourse is not found</i></p>
-    <br><hr><br>
-    <a href="/">home</a>
+    <h1>This is test1.jsp</h1>
 </div>
 </body>
 </html>

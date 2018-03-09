@@ -13,7 +13,7 @@
     </Filters>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%highlight{%style{%d [%t] %-5level %logger: %msg%n%throwable}{bright, BG_Yellow}}{FATAL=black, ERROR=red, WARN=black, INFO=blue, DEBUG=magenta, TRACE=blue}"/>
+            <PatternLayout pattern="%highlight{%style{%d [%t] %-5level %logger: %-60msg%n%throwable}{bright, BG_Yellow}}{FATAL=black, ERROR=red, WARN=black, INFO=blue, DEBUG=magenta, TRACE=blue}"/>
         </Console>
 
         <!--  .............................................................................................................. -->

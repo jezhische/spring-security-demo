@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-<%--todo: NB: на самом деле это"classpath:static/bootstrap3.3.7/css/bootstrap.min.css"--%>
+<%--todo: NB: на самом деле это"classpath:static/bootstrap3.3.7/css/bootstrap.min.css", но преобразование пути
+осуществляется с помощью DemoAppConfig....addResourceHandler(..., "classpath:static/")--%>
     <link rel="stylesheet" type="text/css" href="static/bootstrap3.3.7/css/bootstrap.min.css"/>
     <title>springsecurity-demo-home</title>
     <%--To NOT IGNORE ${} tag (https://dzone.com/articles/spring-mvc-and-java-based-configuration-1)--%>
