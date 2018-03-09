@@ -17,51 +17,31 @@
 <body>
 <div class="container-fluid">
     <h1>This is the raw authentication page</h1>
-
-    <%--<form class="form-inline" action="/action_page.php">--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="email">Email address:</label>--%>
-                <%--<input type="email" class="form-control" id="email">--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="pwd">Password:</label>--%>
-                <%--<input type="password" class="form-control" id="pwd">--%>
-            <%--</div>--%>
-            <%--<div class="checkbox">--%>
-                <%--<label><input type="checkbox"> Remember me</label>--%>
-            <%--</div>--%>
-            <%--<button type="submit" class="btn btn-default">Submit</button>--%>
-    <%--</form>--%>
-
-    <form:form action="${pageContext.request.contextPath}/authentication/login/process" method="post">
-        Login <input type="text" name="username" placeholder="login">
-        Password <input type="text" name="password" placeholder="password">
-        <input type="submit" value="Submit">
-    </form:form>
-
-    <div class="row">
-        <div class="col-sm-2">
-            <a class="head-brand" href="#"><h4>FISHER-PLACE</h4></a>
-        </div>
-        <div class="col-sm-2">
-        </div>
-        <div class="col-sm-2">
-        </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="Введите email">
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="введите пароль">
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-primary">Вход</button>
-            <button type="button" class="btn btn-primary">Регистрация</button>
-        </div>
-    </div>
 </div>
+<form:form action="${pageContext.request.contextPath}/authentication/login/process" method="post">
+    <p>
+        Username: <input type="text" name="username" placeholder="username">
+    </p>
+    <p>
+        Password: <input type="text" name="password" placeholder="password">
+    </p>
+    <input type="submit" value="Login">
+</form:form>
+
+<%--<form class="form-inline" action="authentication/login/process" method="post">--%>
+<%--<div class="form-group">--%>
+            <%--<label for="lg">Username:</label>--%>
+            <%--<input type="text" class="form-control form-control-feedback" id="lg">--%>
+        <%--</div>--%>
+        <%--<div class="form-group">--%>
+            <%--<label for="pwd">Password:</label>--%>
+            <%--<input type="password" class="form-control" id="pwd">--%>
+        <%--</div>--%>
+        <%--<div class="checkbox">--%>
+            <%--<label><input type="checkbox"> Remember me</label>--%>
+        <%--</div>--%>
+        <%--<button type="submit" class="btn btn-default">Login</button>--%>
+    <%--</form>--%>
+<%--</div>--%>
 </body>
 </html>

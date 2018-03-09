@@ -20,9 +20,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 // "admin" permission, otherwise I get permission for all users to ALL pages
                 .and()
                 .formLogin()
-                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/plain-login"
+//                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/plain-login"
 //                .failureUrl("/authentication/login?failed")
-                .loginProcessingUrl("/authentication/login/process") // return "home"
+//                .loginProcessingUrl("/authentication/login/process") // return "home"
                 .permitAll(true);
 
     }
