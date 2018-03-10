@@ -11,7 +11,8 @@
 <head>
 <%--todo: NB: на самом деле это"classpath:static/bootstrap3.3.7/css/bootstrap.min.css", но преобразование пути
 осуществляется с помощью DemoAppConfig....addResourceHandler(..., "classpath:static/")--%>
-    <link rel="stylesheet" type="text/css" href="static/bootstrap3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/bootstrap3.3.7/css/bootstrap.min.css"/>
+    <%--<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">--%>
     <title>springsecurity-demo-home</title>
     <%--To NOT IGNORE ${} tag (https://dzone.com/articles/spring-mvc-and-java-based-configuration-1)--%>
     <%@ page isELIgnored="false" %>

@@ -15,15 +15,16 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+//                .anyRequest().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN") // either:   .anyRequest().authenticated()
                 .antMatchers("/**").hasRole("USER") // "for all users" permission must following after
                 // "admin" permission, otherwise I get permission for all users to ALL pages
                 .and()
-                .formLogin()
-//                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/plain-login"
+                .formLogin() // customizing the form login process
+                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/plain-login"
 //                .failureUrl("/authentication/login?failed")
-//                .loginProcessingUrl("/authentication/login/process") // return "home"
-                .permitAll(true);
+                .loginProcessingUrl("/authentication/login/process") // return "home"
+                .permitAll(true); // allow everyone to see the login page
 
     }
 

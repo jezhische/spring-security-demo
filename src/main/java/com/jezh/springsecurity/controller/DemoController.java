@@ -21,16 +21,4 @@ public class DemoController {
         log.warn("@GetMapping(\"_404\") return \"_404\"");
         return "_404"; // handle with terminalViewResolver
     }
-
-    @GetMapping("authentication/login")
-    public String showLoginPage() {
-        log.warn("@GetMapping(\"authentication/login\") return \"WEB-INF/securityPgs/plain-login.jsp\"");
-        return "WEB-INF/securityPgs/plain-login"; // handle with commonViewResolver
-    }
-
-    @PostMapping("authentication/login/process")
-    public String authenticate() {
-        log.warn("@PostMapping(\"authentication/login/process\") return \"home\"");
-        return "home"; // handle with terminalViewResolver
-    }
 }
