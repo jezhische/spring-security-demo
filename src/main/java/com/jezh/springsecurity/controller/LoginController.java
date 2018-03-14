@@ -13,8 +13,8 @@ public class LoginController {
 
     @GetMapping("/authentication/login")
     public String showLoginPage() {
-        log.warn("@GetMapping(\"authentication/login\") return \"WEB-INF/securityPgs/plain-login.jsp\"");
-        return "WEB-INF/securityPgs/plain-login"; // handle with commonViewResolver
+        log.warn("@GetMapping(\"authentication/login\") return \"WEB-INF/securityPgs/login-form.jsp\"");
+        return "WEB-INF/securityPgs/login-form"; // handle with commonViewResolver
     }
 
     @PostMapping("/authentication/login/process")
