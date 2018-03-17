@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DemoController {
@@ -19,6 +18,19 @@ public class DemoController {
     @GetMapping("_404")
     public String _404() {
         log.warn("@GetMapping(\"_404\") return \"_404\"");
-        return "_404"; // handle with terminalViewResolver
+        return "/WEB-INF/securityPgs/_404"; // handle with terminalViewResolver
+    }
+
+
+    @GetMapping("/leaders")
+    public String showLeadersMeetupPage() {
+        log.warn("@GetMapping(\"/leaders/meetup\") return \"leaders-meetup\"");
+        return "leaders-meetup"; // handle with terminalViewResolver
+    }
+
+    @GetMapping("/systems")
+    public String showAdminMeetupPage() {
+        log.warn("@GetMapping(\"/leaders/meetup\") return \"admin-meetup\"");
+        return "admin-meetup"; // handle with terminalViewResolver
     }
 }

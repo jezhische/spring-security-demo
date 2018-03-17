@@ -18,10 +18,9 @@ public class TerminalViewResolver extends InternalResourceViewResolver {
 
 // Смысл в том, что если в контроллере есть такой метод, но ресурс отсутствует, кинет страницу _404.jsp. Но работает
 // только для простых запросов типа "greet", для более сложных типа "greet/name" возвращает не страницу _404, а ее url
-// в виде "message /ssd/greet/WEB-INF/view/_404.jsp"
+// в виде "message /ssd/greet/WEB-INF/securityPgs/_404.jsp"
         if (stream == null)
-            return super.buildView("_404");
-//            return super.buildView("redirect:/static/_404.html");
+            return super.buildView("WEB-INF/securityPgs/_404");
         return super.buildView(viewName);
     }
 }

@@ -36,11 +36,24 @@
 
                     <%--обработка ошибки с помощью jstl:--%>
                     <c:if test="${param.error != null}">
-                        <div class="col-xs-offset-1">
-                            <i> Sorry! You entered wrong name/password </i>
+                        <div style="color: red"  class="col-xs-offset-1">
+                            <i> Sorry! You entered wrong name/password (jstl msg) </i>
                         </div>
                     </c:if>
+                    <%--обработка logout с помощью jstl:--%>
+                    <c:if test="${param.logout != null}">
+                <div class="col-xs-offset-1">
+                    <i>You have been logout (jstl msg)</i>
+                </div>
+                    </c:if>
                     <hr>
+                    <%--обработка logout с помощью java:--%>
+                    <% if (request.getParameter("logout") != null) {%>
+                    <%--${logoutMessage} HHHHH--%>
+                    <div class="alert alert-success col-xs-offset-1 col-xs-10">
+                        You have been logout (java msg)
+                    </div>
+                    <%}%>
 
                     <div class="form-group">
                             <%--<div class="col-xs-15">--%>
@@ -48,7 +61,8 @@
                             <div>
                                     <%--обработка ошибки с помощью java:--%>
                                 <% String msg = "Please login your name and password";
-                                    String failureMsg = "Invalid username and password";
+                                    String failureMsg = "Invalid username and password. " +
+                                            "Please login your name and password again (java msg)";
                                     if (request.getParameter("error") != null) {
 //    or:     if (request.getParameter("failed") != null) {failureMsg = "Trial to login is unsuccessful. Try again";}
 //    and in DemoSecurityConfig set .failureUrl("/authentication/login?failed") in configure(HttpSecurity http)

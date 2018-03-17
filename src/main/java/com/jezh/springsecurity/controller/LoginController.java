@@ -3,6 +3,7 @@ package com.jezh.springsecurity.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,9 +24,8 @@ public class LoginController {
         return "home"; // handle with terminalViewResolver
     }
 
-    @GetMapping("/authentication/login?failed")
-    public String showLoginFailurePage() {
-        log.warn("@GetMapping(\"/authentication/login?failed\") return \"WEB-INF/securityPgs/login-failure\"");
-        return "WEB-INF/securityPgs/login-failure"; // handle with commonViewResolver
+    @PostMapping("/logout")
+    public String logout() {
+        return "WEB-INF/securityPgs/login-form"; // handle with commonViewResolver
     }
 }
