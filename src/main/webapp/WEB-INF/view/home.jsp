@@ -1,3 +1,6 @@
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.authentication.AnonymousAuthenticationToken" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
@@ -33,19 +36,46 @@
     <br><hr><br>
     <p>
         <%--NB: "principal"--%>
-        Hello, <security:authentication property="principal.username"/>!
+        <%--option with Spring library:--%>
+            <%--Hello, <security:authentication property="principal.username"/>!--%>
+            <%--option with java:--%>
+            <%  String currentUserName = null;
+                String firstChar = null;
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                if (!(authentication instanceof AnonymousAuthenticationToken))
+                    currentUserName = authentication.getName();
+                if (currentUserName != null) {
+                    firstChar = currentUserName.substring(0, 1).toUpperCase();
+                    currentUserName = firstChar + currentUserName.substring(1);
+                }%>
+            Hello, <%= currentUserName%>!
+
+            <%--option with Spring library:--%>
             Your roles is: <security:authentication property="principal.authorities"/>
     </p>
-    <br><hr><br>
+    <br><hr>
+    <security:authorize access="hasRole('HUHA')">
+        <img src="static/img/spring-logo.png" class="col-xs-offset-2"/>
+    </security:authorize>
+    <security:authorize access="hasRole('MANAGER')">
+        <img src="static/img/forManager.jpg" class="col-xs-offset-2"/>
+    </security:authorize>
+    <security:authorize access="hasRole('ADMIN')">
+        <img src="static/img/forAdmin.jpg" class="col-xs-offset-2"/>
+    </security:authorize>
+
+    <hr>
     <p>
         <%--american "peeps" means people or folk--%>
-        <a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a> (Only for Manager peeps and for admin)
+        <a href="${pageContext.request.contextPath}/leaders" style="font-weight: bold; font-style: italic">
+            Leadership Meeting</a> (Only for Manager peeps and for admin)
     </p>
-    <br><hr><br>
+    <hr>
     <p>
-        <a href="${pageContext.request.contextPath}/systems">Admin Meeting</a> (Only for Admin peeps)
+        <a href="${pageContext.request.contextPath}/systems" style="font-weight: bold; font-style: italic">
+            Admin Meeting</a> (Only for Admin peeps)
     </p>
-    <br><hr><br>
+    <hr><br>
 
     <form:form action="${pageContext.request.contextPath}/logout" method="post">
         <%--so that Spring to append a logout parameter: "http://localhost:8086/ssd/authentication/login?logout"--%>
