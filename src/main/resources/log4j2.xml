@@ -13,7 +13,7 @@
     </Filters>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%highlight{%style{%d [%t] %-5level %-54logger: %-60msg%n%throwable}{bright, BG_Yellow}}{FATAL=black, ERROR=red, WARN=black, INFO=blue, DEBUG=magenta, TRACE=blue}"/>
+            <PatternLayout pattern="%highlight{%style{%d [%t] %-5level %class.%-24method: %-60msg%n%throwable}{BG_Yellow}}{FATAL=black, ERROR=red, WARN=black, INFO=blue, DEBUG=magenta, TRACE=black}"/>
         </Console>
 
         <!--  .............................................................................................................. -->
@@ -58,7 +58,7 @@ into the filePattern attribute"-->
     </Appenders>
 
     <Loggers>
-        <Logger name="com.jezh.springdemo.aspect.CRMLoggingAspect" level="trace" additivity="false">
+        <Logger name="com.jezh.springsecurity" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="BarRollingFile"/>
             <Filters>
@@ -68,9 +68,9 @@ into the filePattern attribute"-->
         <!--Это будет его ребенок, и поскольку у него additivity="true" по умолчанию, то аппендеров ему не добавляем -
         он будет пересылать свои сообщения родителю, который будет ими распоряжаться, и дальше пропускать родитель их
         уже не будет, поскольку у родителя additivity="false"-->
-        <!--<Logger name="util.logging.log4j2.fromApacheTutorial.Bar.child" level="error">-->
-            <!--&lt;!&ndash;NB: запись типа <Logger.../> не работает, нужно <Logger...></Logger>&ndash;&gt;-->
-        <!--</Logger>-->
+        <Logger name="com.jezh.springsecurity.util.LoggerSample" level="trace">
+            <!--NB: запись типа <Logger.../> не работает, нужно <Logger...></Logger>-->
+        </Logger>
 
         <Root level="warn">
             <AppenderRef ref="Console"/>

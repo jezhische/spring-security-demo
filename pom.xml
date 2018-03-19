@@ -19,6 +19,7 @@
         <!--<javax.version>7.0</javax.version>-->
         <hibernate.version>5.2.12.Final</hibernate.version>
         <mysql.connector.version>5.1.9</mysql.connector.version>
+        <!--<mysql.connector.version>5.1.45</mysql.connector.version>-->
         <org.postgresql.version>42.1.1</org.postgresql.version>
         <h2.version>1.4.196</h2.version>
         <c3p0.version>0.9.5.2</c3p0.version>
@@ -27,10 +28,12 @@
         <!--<commons-logging.version>1.2</commons-logging.version>-->
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
         <spring.version>5.0.2.RELEASE</spring.version>
+        <springsecurity.version>5.0.0.RELEASE</springsecurity.version>
+        <!--<spring.version>4.3.9.RELEASE</spring.version>-->
+        <!--<springsecurity.version>4.2.3.RELEASE</springsecurity.version>-->
         <!--see maven central repo to find out the compatible version of the springframework and springsecurity.
         E.g.: spring.version 4.3.9.RELEASE and springsecurity.version 4.2.3.RELEASE
         or spring.version 5.0.4.RELEASE and springsecurity.version 5.0.3.RELEASE-->
-        <springsecurity.version>5.0.0.RELEASE</springsecurity.version>
         <junit.version>4.12</junit.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <maven-war-plugin.version>3.2.0</maven-war-plugin.version>
@@ -38,7 +41,7 @@
     </properties>
 
     <dependencies>
-        <!--___________________________________________________________ logger-->
+        <!--_______________________________________________________________________________________ logger-->
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -59,7 +62,30 @@
             <artifactId>jansi</artifactId>
             <version>${jansi.version}</version>
         </dependency>
-        <!--___________________________________________________________ javax servlet, JSP, JSTL-->
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+        <!--ЭТА ШТУКОВИНА (log4j 1 версии) совместно с фасадом slf4j, нужным для переключения между логгерами,
+        ИСПОЛЬЗУЕТСЯ ДЛЯ ТОГО, ЧТОБЫ C3P0 НЕ РУГАЛСЯ НА ТО, ЧТО У НЕГО ЛОГГЕР НЕ СКОНФИГУРИРОВАН-->
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!--_______________________________________________________________________________ javax servlet, JSP, JSTL-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -180,6 +206,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!--___________________________________________________________ exsercise: atlassian-mail-->
