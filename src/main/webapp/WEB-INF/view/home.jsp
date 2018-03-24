@@ -44,6 +44,7 @@
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 if (!(authentication instanceof AnonymousAuthenticationToken))
                     currentUserName = authentication.getName();
+//              первую букву - в Upper Case:
                 if (currentUserName != null) {
                     firstChar = currentUserName.substring(0, 1).toUpperCase();
                     currentUserName = firstChar + currentUserName.substring(1);
@@ -54,6 +55,7 @@
             Your roles is: <security:authentication property="principal.authorities"/>
     </p>
     <br><hr>
+    <%--Показывать следующий ресурс только для определенной роли:--%>
     <security:authorize access="hasRole('HUHA')">
         <img src="static/img/spring-logo.png" class="col-xs-offset-2"/>
     </security:authorize>
@@ -65,6 +67,11 @@
     </security:authorize>
 
     <hr>
+    <security:authorize access="hasRole('HUHA')">
+        <a href="${pageContext.request.contextPath}/beans" style="font-weight: bold; font-style: italic">Engineer bean list</a>
+    </security:authorize>
+    <hr>
+    <%--Доступ по ссылкам с маппингом /leaders или /systems прописан в DemoSecurityConfig: --%>
     <p>
         <%--american "peeps" means people or folk--%>
         <a href="${pageContext.request.contextPath}/leaders" style="font-weight: bold; font-style: italic">

@@ -3,6 +3,8 @@ package com.jezh.springsecurity.config;
 import com.jezh.springsecurity.util.ChainableUrlBasedViewResolver;
 import com.jezh.springsecurity.util.TerminalViewResolver;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static com.jezh.springsecurity.util.LoggerSample.log;
+//import static com.jezh.springsecurity.util.LoggerSample.log;
 
 @Configuration
 // todo: to disable web context (ServletContext), I need to comment following annotations. Details by reference below.
@@ -51,6 +53,8 @@ import static com.jezh.springsecurity.util.LoggerSample.log;
 public class DemoTestAppConfig {
     @Autowired
     private Environment env;
+
+    private static final Logger log = LogManager.getLogger(com.jezh.springsecurity.util.LoggerSample.class);
 //    -------------------------------------------------------------------------------------- JDBC config
 
     @Bean
@@ -66,43 +70,73 @@ public class DemoTestAppConfig {
             throw new RuntimeException(e); // ???????????
         }
         // for sanity's sake log url and user just to make sure I'm reading the data
-//        log.warn("jdbc.url = " + env.getProperty("jdbc.url"));
-//        log.warn("jdbc.user = " + env.getProperty("jdbc.user"));
+        log.warn("jdbc.url = " + env.getProperty("jdbc.url"));
+        log.warn("jdbc.user = " + env.getProperty("jdbc.user"));
 
         // ------------------ set database connection props
-        securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-        securityDataSource.setUser(env.getProperty("jdbc.user"));
-        securityDataSource.setPassword(env.getProperty("jdbc.password"));
+        String url = env.getProperty("jdbc.url");
+        String user = env.getProperty("jdbc.user");
+        String password = env.getProperty("jdbc.password");
+        if (url != null && user != null && password != null) {
+            securityDataSource.setJdbcUrl(url);
+            securityDataSource.setUser(user);
+            securityDataSource.setPassword(password);
+        } else {
+            log.error(">>wrong db access credentials");
+            throw new RuntimeException();
+        }
 
         // ------------------ set connection pool properties
         String initialPoolSize = env.getProperty("connection.pool.initialPoolSize");
         String minPoolSize = env.getProperty("connection.pool.minPoolSize");
         String maxPoolSize = env.getProperty("connection.pool.maxPoolSize");
         String maxIdleTime = env.getProperty("connection.pool.maxIdleTime");
+
         if (initialPoolSize != null) {
-            securityDataSource.setInitialPoolSize(Integer.parseInt(initialPoolSize));
+            try {
+                securityDataSource.setInitialPoolSize(Integer.parseInt(initialPoolSize));
+            } catch (NumberFormatException e) {
+                log.error(">>NumberFormatException thrown when parse initialPoolSize property");
+                throw new RuntimeException();
+            }
         } else {
-            log.error("missing connection.pool.initialPoolSize property");
+            log.error(">>missing connection.pool.initialPoolSize property");
             throw new RuntimeException();
         }
         if (minPoolSize != null) {
-            securityDataSource.setMinPoolSize(Integer.parseInt(minPoolSize));
+            try {
+                securityDataSource.setMinPoolSize(Integer.parseInt(minPoolSize));
+            } catch (NumberFormatException e) {
+                log.error(">>NumberFormatException thrown when parse minPoolSize property");
+                throw new RuntimeException();
+            }
         } else {
-            log.error("missing connection.pool.minPoolSize property");
+            log.error(">>missing connection.pool.minPoolSize property");
             throw new RuntimeException();
         }
         if (maxPoolSize != null) {
-            securityDataSource.setMaxPoolSize(Integer.parseInt(maxPoolSize));
+            try {
+                securityDataSource.setMaxPoolSize(Integer.parseInt(maxPoolSize));
+            } catch (NumberFormatException e) {
+                log.error(">>NumberFormatException thrown when parse maxPoolSize property");
+                throw new RuntimeException();
+            }
         } else {
-            log.error("missing connection.pool.maxPoolSize property");
+            log.error(">>missing connection.pool.maxPoolSize property");
             throw new RuntimeException();
         }
         if (maxIdleTime != null) {
-            securityDataSource.setMaxIdleTime(Integer.parseInt(maxIdleTime));
+            try {
+                securityDataSource.setMaxIdleTime(Integer.parseInt(maxIdleTime));
+            } catch (NumberFormatException e) {
+                log.error(">>NumberFormatException thrown when parse maxIdleTime property");
+                throw new RuntimeException();
+            }
         } else {
-            log.error("missing connection.pool.maxIdleTime property");
+            log.error(">>missing connection.pool.maxIdleTime property");
             throw new RuntimeException();
         }
+
         return securityDataSource;
     }
 

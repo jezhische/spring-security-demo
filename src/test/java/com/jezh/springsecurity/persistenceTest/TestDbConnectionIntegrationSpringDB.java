@@ -1,26 +1,41 @@
 package com.jezh.springsecurity.persistenceTest;
 
 import com.jezh.springsecurity.baseTest.BaseIntegrationRealDBConfigTest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Enumeration;
 
-import static com.jezh.springsecurity.util.LoggerSample.log;
+//import static com.jezh.springsecurity.util.LoggerSample.log;
 import static org.junit.Assert.assertNotNull;
 
 public class TestDbConnectionIntegrationSpringDB extends BaseIntegrationRealDBConfigTest {
 
-// поскольку в BaseIntegrationRealDBConfigTest указано, что @ContextConfiguration(classes = DemoAppConfig.class), я могу
-// заново не конфигурировать dataSource и проч., а просто взять готовые бины
+    private static final Logger log = LogManager.getLogger(com.jezh.springsecurity.util.LoggerSample.class);
+
+// поскольку в BaseIntegrationRealDBConfigTest указано, что @ContextConfiguration(classes = DemoAppConfig.class), я мог
+// бы заново не конфигурировать dataSource и проч., а просто взять готовые бины
+
+// todo: однако, если я воспользуюсь готовым бином для dataSource из класса DemoAppConfig, он подтянет web context,
+// а web context по каким-то рричинам не создается при тестированиии (его нужно мокать или стабить), поэтому выскочит
+// соответствующая ошибка. Поэтому для BaseIntegrationRealDBConfigTest использую @ContextConfiguration(classes =
+// DemoTestAppConfig.class), в котором не создаются бины, требующие web context (см. DemoTestAppConfig)
+// todo: TOFIX: use mocking web context
+//    @Autowired
+//    private DataSource testDataSource;
+
     @Autowired
-    private DataSource testDataSource;
+    private DataSource securityDataSource;
+
 
     @Autowired
     private Environment env;
@@ -33,15 +48,20 @@ public class TestDbConnectionIntegrationSpringDB extends BaseIntegrationRealDBCo
     private Statement stat;
     private ResultSet usersRS, authoritiesRS;
 
-    @BeforeClass
-    public static void init() throws Exception {
-        log.trace("there are drivers enable: ");
-        Enumeration<Driver> driverEnumeration = DriverManager.getDrivers();
-        while (driverEnumeration.hasMoreElements()) log.debug(driverEnumeration.nextElement());
-    }
+//    @BeforeClass
+//    public static void init() throws Exception {
+//        log.trace("there are drivers enable: ");
+//        Enumeration<Driver> driverEnumeration = DriverManager.getDrivers();
+//        while (driverEnumeration.hasMoreElements()) log.debug(driverEnumeration.nextElement());
+//    }
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Before
     public void setUp() throws Exception {
+//        log.error("<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>> " + applicationContext.getStartupDate() +
+//        applicationContext.containsBean("org.springframework.context.event.internalEventListenerFactory"));
         url = env.getProperty("jdbc.url");
         user = env.getProperty("jdbc.user");
         password = env.getProperty("jdbc.password");
@@ -86,7 +106,7 @@ public class TestDbConnectionIntegrationSpringDB extends BaseIntegrationRealDBCo
 
     @Test
     public void testDataSource() throws Exception {
-        conn = testDataSource.getConnection();
+        conn = securityDataSource.getConnection();
         log.warn("ComboPooledDataSource dataSource.getConnection conn.isValid = " + conn.isValid(0));
         stat = conn.createStatement();
         usersRS = stat.executeQuery("SELECT * FROM usersecurity.users");

@@ -1,14 +1,18 @@
 package com.jezh.springsecurity.controller;
 
-import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.LogManager;
+
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DemoController {
 
-    private final static Logger log = LogManager.getLogger();
+    @Autowired
+    private Logger log;
+
     @GetMapping("")
     public String home() {
         log.warn("@GetMapping(\"\") return \"home\"");
