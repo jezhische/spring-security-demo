@@ -10,7 +10,7 @@ DROP TABLE if EXISTS users;
 set foreign_key_checks=1;
 create table users (
   username VARCHAR (50) not null,
-  password VARCHAR (50) not null,
+  password VARCHAR (68) not null,
   enabled tinyint (1) not null,
   PRIMARY KEY (username)
 ) engine=InnoDB DEFAULT CHARSET=latin1;
