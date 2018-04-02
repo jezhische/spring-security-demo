@@ -9,14 +9,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan("com.jezh.springsecurity")
+//@ComponentScan("com.jezh.springsecurity")
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+//    без аннотации @ComponentScan("com.jezh.springsecurity") не могу заавтовайрить следующий бин. Хотя, при этом
+//    все работает. Кроме того, могу написать @Resource вместо @Autowired, тогда IDEA не подчеркивает красным:
+//    @Autowired
+    @Resource
     private DataSource securityDataSource;
 
     //configure security of web paths in application, login, logout etc.
@@ -30,11 +34,11 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 //  todo: NB: security doesn't work without following line, as there's no restriction for any URL
                 .antMatchers("/**").hasRole("EMPLOYEE") // "for all authorized users" permission must
                 // following after "admin" permission, otherwise I get permission for all users to ALL pages
-                .antMatchers("/commons/**").permitAll()
+                .antMatchers("/common/**").permitAll()
                 .and()
 //                if the invalid login occured, Spring appends an error parameter: "http://localhost:8086/ssd/authentication/login?error"
                 .formLogin() // customizing the form login process
-                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/plain-login"
+                .loginPage("/authentication/login") // return "WEB-INF/securityPgs/login-form"
 //                .failureUrl("/authentication/login?failed")
                 .loginProcessingUrl("/authentication/login/process") // return "home"
                 .permitAll(true) // allow everyone to see the login page

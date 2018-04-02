@@ -1,4 +1,4 @@
-package com.jezh.springsecurity.util;
+package com.jezh.springsecurity.util.viewResolvers;
 
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.InternalResourceView;

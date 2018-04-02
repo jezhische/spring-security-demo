@@ -1,41 +1,35 @@
 package com.jezh.springsecurity.persistenceTest;
 
-import com.jezh.springsecurity.baseTest.BaseIntegrationRealDBConfigTest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.jezh.springsecurity.baseTest.BaseIntegrationTestConfig;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.Enumeration;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 //import static com.jezh.springsecurity.util.LoggerSample.log;
-import static org.junit.Assert.assertNotNull;
 
-public class TestDbConnectionIntegrationSpringDB extends BaseIntegrationRealDBConfigTest {
+public class TestRealDbConnection extends BaseIntegrationTestConfig {
 
-    private static final Logger log = LogManager.getLogger(com.jezh.springsecurity.util.LoggerSample.class);
-
-// поскольку в BaseIntegrationRealDBConfigTest указано, что @ContextConfiguration(classes = DemoAppConfig.class), я мог
-// бы заново не конфигурировать dataSource и проч., а просто взять готовые бины
-
-// todo: однако, если я воспользуюсь готовым бином для dataSource из класса DemoAppConfig, он подтянет web context,
-// а web context по каким-то рричинам не создается при тестированиии (его нужно мокать или стабить), поэтому выскочит
-// соответствующая ошибка. Поэтому для BaseIntegrationRealDBConfigTest использую @ContextConfiguration(classes =
-// DemoTestAppConfig.class), в котором не создаются бины, требующие web context (см. DemoTestAppConfig)
-// todo: TOFIX: use mocking web context
-//    @Autowired
-//    private DataSource testDataSource;
+// поскольку в BaseIntegrationTestConfig указано, что @ContextConfiguration(classes = DemoAppConfig.class), я могу
+// заново не конфигурировать dataSource и проч., а просто взять готовые бины. Однако, конфигурация DemoAppConfig
+// подтянет за собой также и web context (для создания и размещения ViewResolver и т.п. бинов). Чтобы не получить ошибку,
+// аннотируем BaseIntegrationTestConfig как @WebAppConfiguration, автовайрим веб-контекст, а затем создаем
+// MockMvc объект от веб-контекста как точку входа в мок-тесты. NB: при этом почему-то
+// todo: получаем servletContext instanceof MockServletContext - почему???
 
     @Autowired
     private DataSource securityDataSource;
-
 
     @Autowired
     private Environment env;
@@ -48,20 +42,16 @@ public class TestDbConnectionIntegrationSpringDB extends BaseIntegrationRealDBCo
     private Statement stat;
     private ResultSet usersRS, authoritiesRS;
 
-//    @BeforeClass
-//    public static void init() throws Exception {
-//        log.trace("there are drivers enable: ");
-//        Enumeration<Driver> driverEnumeration = DriverManager.getDrivers();
-//        while (driverEnumeration.hasMoreElements()) log.debug(driverEnumeration.nextElement());
-//    }
+//    @Autowired
+//    ApplicationContext applicationContext;
 
-    @Autowired
-    ApplicationContext applicationContext;
-
+    @Override
     @Before
     public void setUp() throws Exception {
+        super.setUp();
 //        log.error("<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>> " + applicationContext.getStartupDate() +
 //        applicationContext.containsBean("org.springframework.context.event.internalEventListenerFactory"));
+
         url = env.getProperty("jdbc.url");
         user = env.getProperty("jdbc.user");
         password = env.getProperty("jdbc.password");

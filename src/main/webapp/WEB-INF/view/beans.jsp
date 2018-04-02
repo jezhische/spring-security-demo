@@ -10,11 +10,16 @@
 <html>
 <head>
     <%@ page isELIgnored="false" %>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/f52.green.w.png">
     <title>beans</title>
 </head>
 <body>
+<hr>
+<h3><i><b><a href="${pageContext.request.contextPath}">back to home page</a> </b></i></h3>
+<hr>
 <h2 style="color: coral"><i><b>Application Context Beans:</b></i></h2>
 <hr><br>
+<%--jstl вывод массива:--%>
 <c:forEach items="${beanArray}" var="item" varStatus="itemStat">
     <p>appContextBean[${itemStat.index}] = ${item}</p>
 </c:forEach>

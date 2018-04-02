@@ -22,6 +22,7 @@
     <title>springsecurity-demo-home</title>
     <%--To NOT IGNORE ${} tag (https://dzone.com/articles/spring-mvc-and-java-based-configuration-1)--%>
     <%@ page isELIgnored="false" %>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/f52.green.w.png">
 </head>
 <body>
 <%--div - `generic language/style container`--%>
@@ -57,18 +58,22 @@
     <br><hr>
     <%--Показывать следующий ресурс только для определенной роли:--%>
     <security:authorize access="hasRole('HUHA')">
-        <img src="static/img/spring-logo.png" class="col-xs-offset-2"/>
+        <img src="static/spring-logo.png" class="col-xs-offset-2"/>
     </security:authorize>
     <security:authorize access="hasRole('MANAGER')">
-        <img src="static/img/forManager.jpg" class="col-xs-offset-2"/>
+        <img src="static/forManager.jpg" class="col-xs-offset-2"/>
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
-        <img src="static/img/forAdmin.jpg" class="col-xs-offset-2"/>
+        <img src="static/forAdmin.jpg" class="col-xs-offset-2"/>
     </security:authorize>
 
     <hr>
     <security:authorize access="hasRole('HUHA')">
         <a href="${pageContext.request.contextPath}/beans" style="font-weight: bold; font-style: italic">Engineer bean list</a>
+        <br><br>
+        <p><a href="${pageContext.request.contextPath}/common" style="font-weight: bold; font-style: italic; color: lawngreen">
+            Common page for testing
+        </a></p>
     </security:authorize>
     <hr>
     <%--Доступ по ссылкам с маппингом /leaders или /systems прописан в DemoSecurityConfig: --%>

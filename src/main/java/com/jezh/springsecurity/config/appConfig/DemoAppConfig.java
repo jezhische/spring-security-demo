@@ -1,7 +1,9 @@
 package com.jezh.springsecurity.config.appConfig;
 
-import com.jezh.springsecurity.util.ChainableUrlBasedViewResolver;
-import com.jezh.springsecurity.util.TerminalViewResolver;
+import com.jezh.springsecurity.util.interceptors.TimeBasedAccessInterceptor;
+import com.jezh.springsecurity.util.utils.Utils;
+import com.jezh.springsecurity.util.viewResolvers.ChainableUrlBasedViewResolver;
+import com.jezh.springsecurity.util.viewResolvers.TerminalViewResolver;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -77,7 +76,7 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
 //  "**": "...See AntPathMatcher for more details on the syntax."
 //  E.g., если есть файл /static/html/logo.html или /static/html/test/logo.html, то запрос к нему будет: /static/logo.html-->
         registry.addResourceHandler("/static/**").addResourceLocations("/static/", "/static/html/",
-                "/static/html/test/", "classpath:static/", "classpath:static/bootstrap3.3.7/css/");
+                "/static/html/test/", "classpath:static/", "static/img/", "classpath:static/bootstrap3.3.7/css/");
     }
 
     //    -------------------------------------------------------------------------------------- unhandled requests config
@@ -93,7 +92,7 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
 
 //    --------------------------------------------------------------------------------------- exceptionResolver config
 //    https://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-configuration/
-//    If not specified, the default status code will be applied.
+//    Здесь определяется, какую страницу показывать, если брошено исключение:
     @Bean
     public SimpleMappingExceptionResolver exceptionResolver() {
         SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
@@ -116,9 +115,18 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
 
         exceptionResolver.setStatusCodes(statusCodes);
 
-
         return exceptionResolver;
     }
+
+//    -------------------------------------------------------------------------------------- interceptor config
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // Пока что отконфигурирован так, чтобы перехват круглосуточно НЕ совершался
+        registry.addInterceptor(new TimeBasedAccessInterceptor(0, 24));
+    }
+
 
 //    -------------------------------------------------------------------------------------- JDBC config
 
@@ -127,16 +135,20 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
         // ------------------ create connection pool
         ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
 
+        log.info("Start SecurityDataSource initialization--------------------------------------------");
+
         // ------------------ set the jdbc driver
         try {
-            securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
+            String jdbcDriver = env.getProperty("jdbc.driver");
+            securityDataSource.setDriverClass(jdbcDriver);
+            log.trace("jdbc: jdbc.driver is set to " + jdbcDriver);
         } catch (PropertyVetoException e) {
             log.error(e.getMessage());
             throw new RuntimeException(e); // ???????????
         }
-        // for sanity's sake log url and user just to make sure I'm reading the data
-        log.warn("jdbc.url = " + env.getProperty("jdbc.url"));
-        log.warn("jdbc.user = " + env.getProperty("jdbc.user"));
+//        // for sanity's sake log url and user just to make sure I'm reading the data
+//        log.warn("jdbc.url = " + env.getProperty("jdbc.url"));
+//        log.warn("jdbc.user = " + env.getProperty("jdbc.user"));
 
         // ------------------ set database connection props
         String url = env.getProperty("jdbc.url");
@@ -146,61 +158,73 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
         securityDataSource.setJdbcUrl(url);
         securityDataSource.setUser(user);
         securityDataSource.setPassword(password);
+            log.trace("jdbc: jdbc.url is set to " + url);
+            log.trace("jdbc: jdbc.user is set to " + user);
+            log.trace("jdbc: jdbc.password is set to " + password + " (secret hidden restricted forbidden info!)");
+
         } else {
             log.error(">>wrong db access credentials");
             throw new RuntimeException();
         }
+// Вместо этой долгой писанины создал специальный метод в util
+        // ------------------ set connection pool properties
+//        String initialPoolSize = env.getProperty("connection.pool.initialPoolSize");
+//        String minPoolSize = env.getProperty("connection.pool.minPoolSize");
+//        String maxPoolSize = env.getProperty("connection.pool.maxPoolSize");
+//        String maxIdleTime = env.getProperty("connection.pool.maxIdleTime");
+//
+//        if (initialPoolSize != null) {
+//            try {
+//                securityDataSource.setInitialPoolSize(Integer.parseInt(initialPoolSize));
+//            } catch (NumberFormatException e) {
+//                log.error(">>NumberFormatException thrown when parse initialPoolSize property");
+//                throw new RuntimeException();
+//            }
+//        } else {
+//            log.error(">>missing connection.pool.initialPoolSize property");
+//            throw new RuntimeException();
+//        }
+//        if (minPoolSize != null) {
+//            try {
+//                securityDataSource.setMinPoolSize(Integer.parseInt(minPoolSize));
+//            } catch (NumberFormatException e) {
+//                log.error(">>NumberFormatException thrown when parse minPoolSize property");
+//                throw new RuntimeException();
+//            }
+//        } else {
+//            log.error(">>missing connection.pool.minPoolSize property");
+//            throw new RuntimeException();
+//        }
+//        if (maxPoolSize != null) {
+//            try {
+//                securityDataSource.setMaxPoolSize(Integer.parseInt(maxPoolSize));
+//            } catch (NumberFormatException e) {
+//                log.error(">>NumberFormatException thrown when parse maxPoolSize property");
+//                throw new RuntimeException();
+//            }
+//        } else {
+//            log.error(">>missing connection.pool.maxPoolSize property");
+//            throw new RuntimeException();
+//        }
+//        if (maxIdleTime != null) {
+//            try {
+//                securityDataSource.setMaxIdleTime(Integer.parseInt(maxIdleTime));
+//            } catch (NumberFormatException e) {
+//                log.error(">>NumberFormatException thrown when parse maxIdleTime property");
+//                throw new RuntimeException();
+//            }
+//        } else {
+//            log.error(">>missing connection.pool.maxIdleTime property");
+//            throw new RuntimeException();
+//        }
 
         // ------------------ set connection pool properties
-        String initialPoolSize = env.getProperty("connection.pool.initialPoolSize");
-        String minPoolSize = env.getProperty("connection.pool.minPoolSize");
-        String maxPoolSize = env.getProperty("connection.pool.maxPoolSize");
-        String maxIdleTime = env.getProperty("connection.pool.maxIdleTime");
+        securityDataSource.setInitialPoolSize(Utils.parsePropsToInt(env, log, "connection.pool.initialPoolSize"));
+        securityDataSource.setMinPoolSize(Utils.parsePropsToInt(env, log, "connection.pool.minPoolSize"));
+        securityDataSource.setMaxPoolSize(Utils.parsePropsToInt(env, log, "connection.pool.maxPoolSize"));
+        securityDataSource.setMaxIdleTime(Utils.parsePropsToInt(env, log, "connection.pool.maxIdleTime"));
 
-        if (initialPoolSize != null) {
-            try {
-                securityDataSource.setInitialPoolSize(Integer.parseInt(initialPoolSize));
-            } catch (NumberFormatException e) {
-                log.error(">>NumberFormatException thrown when parse initialPoolSize property");
-                throw new RuntimeException();
-            }
-        } else {
-            log.error(">>missing connection.pool.initialPoolSize property");
-            throw new RuntimeException();
-        }
-        if (minPoolSize != null) {
-            try {
-                securityDataSource.setMinPoolSize(Integer.parseInt(minPoolSize));
-            } catch (NumberFormatException e) {
-                log.error(">>NumberFormatException thrown when parse minPoolSize property");
-                throw new RuntimeException();
-            }
-        } else {
-            log.error(">>missing connection.pool.minPoolSize property");
-            throw new RuntimeException();
-        }
-        if (maxPoolSize != null) {
-            try {
-                securityDataSource.setMaxPoolSize(Integer.parseInt(maxPoolSize));
-            } catch (NumberFormatException e) {
-                log.error(">>NumberFormatException thrown when parse maxPoolSize property");
-                throw new RuntimeException();
-            }
-        } else {
-            log.error(">>missing connection.pool.maxPoolSize property");
-            throw new RuntimeException();
-        }
-        if (maxIdleTime != null) {
-            try {
-                securityDataSource.setMaxIdleTime(Integer.parseInt(maxIdleTime));
-            } catch (NumberFormatException e) {
-                log.error(">>NumberFormatException thrown when parse maxIdleTime property");
-                throw new RuntimeException();
-            }
-        } else {
-            log.error(">>missing connection.pool.maxIdleTime property");
-            throw new RuntimeException();
-        }
+        log.info("SecurityDataSource initialization finished--------------------------------------------");
 
         return securityDataSource;
     }

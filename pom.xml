@@ -34,6 +34,7 @@
         <!--see maven central repo to find out the compatible version of the springframework and springsecurity.
         E.g.: spring.version 4.3.9.RELEASE and springsecurity.version 4.2.3.RELEASE
         or spring.version 5.0.4.RELEASE and springsecurity.version 5.0.3.RELEASE-->
+        <jackson.version>2.2.1</jackson.version>
         <junit.version>4.12</junit.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <maven-war-plugin.version>3.2.0</maven-war-plugin.version>
@@ -202,6 +203,9 @@
             <version>${springsecurity.version}</version>
         </dependency>
         <!--___________________________________________________________ test: junit-->
+        <!-- TESTING DEPENDENCIES from  http://www.baeldung.com/integration-testing-in-spring
+        The following Maven dependencies are needed for running integration tests as described in this article.
+        First and foremost the latest JUnit and Spring test dependencies:-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -214,6 +218,88 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--For effective asserting of results, we’re going to also use Hamcrest and JSON path:-->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!--______________________________________________________________-->
+
+        <!-- TESTING DEPENDENCIES from https://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-configuration/
+        https://github.com/pkainulainen/spring-mvc-test-examples/blob/master/controllers-unittest/pom.xml-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-core</artifactId>-->
+            <!--<version>${jackson.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;todo: NB: применение этой библиотеки вызывает "Error creating bean with name 'org.springframework.web.-->
+        <!--servlet.mvc.method.annotation.RequestMappingHandlerAdapter'"&ndash;&gt;-->
+        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+            <!--&lt;!&ndash;<groupId>com.fasterxml.jackson.core</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>jackson-databind</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<version>${jackson.version}</version>&ndash;&gt;-->
+            <!--&lt;!&ndash;<scope>test</scope>&ndash;&gt;-->
+        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hamcrest</groupId>-->
+            <!--<artifactId>hamcrest-all</artifactId>-->
+            <!--<version>1.3</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>${junit.version}</version>-->
+            <!--<scope>test</scope>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>hamcrest-core</artifactId>-->
+                    <!--<groupId>org.hamcrest</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.mockito</groupId>-->
+            <!--<artifactId>mockito-core</artifactId>-->
+            <!--<version>2.15.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-test</artifactId>-->
+            <!--<version>${spring.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.github.springtestdbunit</groupId>-->
+            <!--<artifactId>spring-test-dbunit</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.dbunit</groupId>-->
+            <!--<artifactId>dbunit</artifactId>-->
+            <!--<version>2.4.9</version>-->
+            <!--<scope>test</scope>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>junit</artifactId>-->
+                    <!--<groupId>junit</groupId>-->
+                <!--</exclusion>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>slf4j-api</artifactId>-->
+                    <!--<groupId>org.slf4j</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
         <!--___________________________________________________________ exsercise: atlassian-mail-->
         <!--api расположен только в atlassian репозитории, в мавен-центральном его нет. Чтобы разрешить зависимость,
         нужно добавить ссылку на репозиторий (см. ниже)-->

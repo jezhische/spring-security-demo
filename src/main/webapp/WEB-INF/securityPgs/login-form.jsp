@@ -5,7 +5,7 @@
 <html>
 <head>
         <%@ page isELIgnored="false" %>
-        <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/f52.green.w.png">
     <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/bootstrap.min.css"/>--%>
     <title>authentication</title>
     <meta charset="utf-8">
@@ -110,7 +110,7 @@
 
 </div>
 
-<h1>Authentication page (still in memory)</h1>
+<h1>Authentication page (already with the db, but still "no operation" plain text password)</h1>
 
 
 <br><hr><br>

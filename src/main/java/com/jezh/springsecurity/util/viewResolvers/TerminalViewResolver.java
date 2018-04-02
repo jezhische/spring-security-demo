@@ -1,4 +1,4 @@
-package com.jezh.springsecurity.util;
+package com.jezh.springsecurity.util.viewResolvers;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
