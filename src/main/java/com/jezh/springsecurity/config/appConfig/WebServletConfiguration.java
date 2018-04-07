@@ -1,6 +1,7 @@
 package com.jezh.springsecurity.config.appConfig;
 
 import com.jezh.springsecurity.config.appConfig.DemoAppConfig;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -30,6 +31,15 @@ public class WebServletConfiguration implements WebApplicationInitializer {
 //        Устанавливаем интерфейс ServletContext для данного веб-контекста, который даст сервлету набор
 // методов "to communicate with its servlet container, for example, to get the MIME type of a file, dispatch requests, or write to a log file."
         webCtx.setServletContext(container);
+
+// Листенер, нужный для того, чтобы добраться до содержимого сессии - в моем случае, чтобы получить список всех principals
+// с помощью бина SessionRegistryImpl (создан в DemoSequrityConfig), который получает информацию о сессии, только если
+// зарегистрирован этот листенер. Но можно просто создать бин в конфигурации - см. DemoSequrityConfig
+// "Publishes HttpSessionApplicationEvents to the Spring Root WebApplicationContext."
+        container.addListener(HttpSessionEventPublisher.class);
+
+
+
 //        Теперь можно воспользоваться интерфейсом ServletContext для того, чтобы создать и установить диспетчер-сервлет
 //      new DispatcherServlet(webCtx) с именем "dispatcher" для данного веб-контекста (аналог того же действия в web.xml).
 //      Кроме того, метод addServlet() возвращает объект интерфейса ServletRegistration.Dynamic, который можно

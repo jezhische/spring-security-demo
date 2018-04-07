@@ -32,8 +32,8 @@ import static org.junit.Assert.assertTrue;
 @WebAppConfiguration(value = "com.jezh.springsecurity.config.appConfig.WebServletConfiguration")
 public abstract class BaseIntegrationTestConfig {
 
-    public static final Logger log = LogManager.getLogger(com.jezh.springsecurity.util.LoggerSample.class); // NB:
-    // public to use it in the inherited test methods
+    @Autowired
+    public Logger log;
 
     public MockMvc mockMvc;
 
@@ -45,6 +45,7 @@ public abstract class BaseIntegrationTestConfig {
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        servletContext = webApplicationContext.getServletContext();
     }
 
     @BeforeClass
@@ -66,7 +67,7 @@ public abstract class BaseIntegrationTestConfig {
                 "%n%-147s Verify that the demoController bean is not null." +
                 "%n%-147s Verify that the demoAppConfig bean is not null." +
                 "%n%-147s Verify that the demoSecurityConfig bean is not null.", "", "", "", "", "", ""));
-        servletContext = webApplicationContext.getServletContext();
+//        servletContext = webApplicationContext.getServletContext();
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(webApplicationContext.getBean("demoController"));

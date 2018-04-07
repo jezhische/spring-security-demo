@@ -18,22 +18,26 @@
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
         <!--<javax.version>7.0</javax.version>-->
         <hibernate.version>5.2.12.Final</hibernate.version>
-        <mysql.connector.version>5.1.9</mysql.connector.version>
-        <!--<mysql.connector.version>5.1.45</mysql.connector.version>-->
+        <mysql.connector.version>5.1.45</mysql.connector.version>
+        <!--<mysql.connector.version>5.1.9</mysql.connector.version>-->
         <org.postgresql.version>42.1.1</org.postgresql.version>
         <h2.version>1.4.196</h2.version>
         <c3p0.version>0.9.5.2</c3p0.version>
         <!--<javax.validation.version>2.0.0.Final</javax.validation.version>-->
-        <hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
+        <!--<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>-->
+        <!--<hibernate.validator.version>6.0.7.Final</hibernate.validator.version>-->
+        <!--NB: version 6.0.7 requires el-api jar in version 3.0 (it is contained in Tomcat 8, but in Tomcat 7 there is
+        only version 2). And I have "NoClassDefFoundError: javax/el/ELManager". The 5.3.4.Final resolves this issue-->
+        <hibernate.validator.version>5.3.4.Final</hibernate.validator.version>
         <!--<commons-logging.version>1.2</commons-logging.version>-->
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
-        <spring.version>5.0.2.RELEASE</spring.version>
-        <springsecurity.version>5.0.0.RELEASE</springsecurity.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
+        <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
         <!--<spring.version>4.3.9.RELEASE</spring.version>-->
         <!--<springsecurity.version>4.2.3.RELEASE</springsecurity.version>-->
         <!--see maven central repo to find out the compatible version of the springframework and springsecurity.
         E.g.: spring.version 4.3.9.RELEASE and springsecurity.version 4.2.3.RELEASE
-        or spring.version 5.0.4.RELEASE and springsecurity.version 5.0.3.RELEASE-->
+        or spring.version 5.0.2.RELEASE and springsecurity.version 5.0.0.RELEASE-->
         <jackson.version>2.2.1</jackson.version>
         <junit.version>4.12</junit.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>

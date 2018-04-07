@@ -99,7 +99,7 @@ public class TestRealDbConnection extends BaseIntegrationTestConfig {
         conn = securityDataSource.getConnection();
         log.warn("ComboPooledDataSource dataSource.getConnection conn.isValid = " + conn.isValid(0));
         stat = conn.createStatement();
-        usersRS = stat.executeQuery("SELECT * FROM usersecurity.users");
+        usersRS = stat.executeQuery("SELECT * FROM usersecurity_bcrypt.users");
         log.error("users table content: ---------------------------------------------------------");
         while (usersRS.next()) {
             username = usersRS.getString("username");
@@ -108,7 +108,7 @@ public class TestRealDbConnection extends BaseIntegrationTestConfig {
             log.info(username + " : " + passwd + " : " + enabled);
         }
         log.error("authorities table content: ---------------------------------------------------------");
-        authoritiesRS = stat.executeQuery("SELECT * FROM usersecurity.authorities");
+        authoritiesRS = stat.executeQuery("SELECT * FROM usersecurity_bcrypt.authorities");
         while (authoritiesRS.next()) {
             username = authoritiesRS.getString("username");
             authority = authoritiesRS.getString("authority");

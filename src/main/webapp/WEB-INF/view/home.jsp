@@ -87,6 +87,12 @@
         <a href="${pageContext.request.contextPath}/systems" style="font-weight: bold; font-style: italic">
             Admin Meeting</a> (Only for Admin peeps)
     </p>
+    <security:authorize access="hasRole('ADMIN')">
+        <hr>
+        <a href="${pageContext.request.contextPath}/systems/userlist" style="font-weight: bold; font-style: italic">
+            principals admin page (userlist)
+        </a>
+    </security:authorize>
     <hr><br>
 
     <form:form action="${pageContext.request.contextPath}/logout" method="post">

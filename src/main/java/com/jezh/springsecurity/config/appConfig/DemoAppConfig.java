@@ -7,11 +7,14 @@ import com.jezh.springsecurity.util.viewResolvers.TerminalViewResolver;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
+import java.util.List;
 import java.util.Properties;
 
 //import static com.jezh.springsecurity.util.LoggerSample.log;
@@ -229,5 +233,14 @@ public class DemoAppConfig implements WebMvcConfigurer /*extends WebMvcConfigure
         return securityDataSource;
     }
 
-
+// --------------------------------------------------------------------- message source for validation registration form:
+    // for VALIDATION I need the following pattern in the messages.properties: error type.model attribute name.field name
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        NB: not "i18/messages.properties"
+        messageSource.addBasenames("i18/messages"); // vararg here, there may be multiple basenames with comma delimiter
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
 }

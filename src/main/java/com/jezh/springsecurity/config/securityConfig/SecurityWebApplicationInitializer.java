@@ -1,4 +1,4 @@
-package com.jezh.springsecurity.config.inmemorySecurityConfig;
+package com.jezh.springsecurity.config.securityConfig;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

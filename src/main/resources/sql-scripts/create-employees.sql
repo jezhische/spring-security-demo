@@ -4,6 +4,8 @@
 #   ('mary', '{noop}test123', 1),
 #   ('susan', '{noop}test123', 1);
 
+USE USERSECURITY;
+
 INSERT INTO users VALUES
   ('john', '{bcrypt}$2a$04$yq0EW76JokEFPtTayKeq8OD2E1B2gGfzNBds93b9TL5uw9RKehRSy', 1),
   ('mary', '{bcrypt}$2a$04$cVN1PSDOdWMukdKN3ZV2meX8OGZhRhsJYGQv1B.GpPJxrKuCeKXNy', 1),

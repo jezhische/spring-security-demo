@@ -103,8 +103,18 @@
                             <button type="submit" class="btn btn-success">Login</button>
                         </div>
                     </div>
+                    <%--<input type="hidden"--%>
+                           <%--name="${_csrf.parameterName}"--%>
+                           <%--value="${_csrf.toekn}" />--%>
                 </form:form>
             </div>
+        </div>
+        <div>
+            <a href="${pageContext.request.contextPath}/register/showRegistrationForm"
+               class="btn btn-primary"
+               role="button" aria-pressed="true">
+                Register New User
+            </a>
         </div>
     </div>
 
