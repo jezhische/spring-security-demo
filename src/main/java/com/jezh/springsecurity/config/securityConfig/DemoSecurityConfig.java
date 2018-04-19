@@ -36,8 +36,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/systems/**").hasRole("ADMIN")
                 .antMatchers("/leaders/**").hasAnyRole("MANAGER", "ADMIN")
 //  todo: NB: security doesn't work without following line, as there's no restriction for any URL
-                .antMatchers("/**").hasRole("EMPLOYEE") // "for all authorized users" permission must
+                .antMatchers("/**").authenticated() // "for all authorized users" permission must
                 // following after "admin" permission, otherwise I get permission for all users to ALL pages
+                // can be .hasRole("EMPLOYEE") 'cause any user here has a role EMPLOYEE
                 .antMatchers("/common/**").permitAll()
                 .and()
 //                if the invalid login occured, Spring appends an error parameter: "http://localhost:8086/ssd/authentication/login?error"

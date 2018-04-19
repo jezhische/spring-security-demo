@@ -69,7 +69,7 @@ public class RegistrationController {
         // form validation
         if (bindingResult.hasErrors()) {
             model.addAttribute("crmUser", new CrmUser());
-//            model.addAttribute("registrationError", "User name/password can not be empty.");
+            model.addAttribute("registrationError", "User name/password can not be empty.");
             log.warn("User name/password can not be empty.");
             return "WEB-INF/securityPgs/registration-form";
         }
@@ -86,10 +86,6 @@ public class RegistrationController {
             return "WEB-INF/securityPgs/registration-form";
         }
 
-        //
-        // whew ... we passed all of the validation checks!
-        // let's get down to business!!!
-        //
 
         // encrypt the password
         String encodedPassword = passwordEncoder.encode(crmUser.getPassword());
